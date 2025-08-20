@@ -1,5 +1,7 @@
 package com.example.task.application
 
+import com.example.task.common.exception.CustomException
+import com.example.task.common.exception.ErrorCode
 import com.example.task.domain.user.User
 import com.example.task.domain.user.UserRepository
 import com.example.task.domain.user.UserRole
@@ -17,7 +19,7 @@ class UserService(
     @Transactional
     fun createUser(email: String, password: String, name: String): User {
         if (userRepository.existsByEmail(email)) {
-            throw IllegalArgumentException("Email already exists: $email")
+            throw CustomException(ErrorCode.DUPLICATE_EMAIL, "Email already exists: $email")
         }
         
         val encodedPassword = passwordEncoder.encode(password)
