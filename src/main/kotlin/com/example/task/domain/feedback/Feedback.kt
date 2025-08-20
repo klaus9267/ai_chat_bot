@@ -1,8 +1,8 @@
 package com.example.task.domain.feedback
 
-import com.example.task.common.BaseEntity
-import com.example.task.domain.chat.Chat
-import com.example.task.domain.user.User
+import com.example.task.domain.common.BaseEntity
+import com.example.task.domain.chat.entity.Chat
+import com.example.task.domain.user.entity.User
 import jakarta.persistence.*
 
 @Entity

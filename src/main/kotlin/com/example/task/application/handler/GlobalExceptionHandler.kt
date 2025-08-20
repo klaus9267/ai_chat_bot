@@ -1,8 +1,6 @@
 package com.example.task.application.handler
 
-import com.example.task.common.ErrorResponse
-import com.example.task.common.FieldError
-import com.example.task.common.exception.CustomException
+import com.example.task.application.handler.exception.CustomException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
