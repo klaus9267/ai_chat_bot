@@ -7,10 +7,10 @@ import jakarta.validation.constraints.NotBlank
 data class LoginRequest(
     @field:NotBlank(message = "Email is required")
     @field:Email(message = "Invalid email format")
-    @Schema(description = "User email address", example = "user@example.com")
+    @Schema(description = "사용자 이메일 주소", example = "user@example.com")
     val email: String,
 
     @field:NotBlank(message = "Password is required")
-    @Schema(description = "User password", example = "password123")
+    @Schema(description = "사용자 비밀번호", example = "password123")
     val password: String
 )

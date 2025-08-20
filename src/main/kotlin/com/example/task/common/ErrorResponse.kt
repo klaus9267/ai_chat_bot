@@ -4,33 +4,33 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDateTime
 
-@Schema(description = "Error response format")
+@Schema(description = "오류 응답 형식")
 data class ErrorResponse(
-    @Schema(description = "HTTP status code", example = "400")
+    @Schema(description = "HTTP 상태 코드", example = "400")
     val status: Int,
     
-    @Schema(description = "Error code", example = "INVALID_REQUEST")
+    @Schema(description = "오류 코드", example = "INVALID_REQUEST")
     val code: String,
     
-    @Schema(description = "Error message", example = "Invalid input provided")
+    @Schema(description = "오류 메시지", example = "Invalid input provided")
     val message: String,
     
-    @Schema(description = "Request path", example = "/api/v1/auth/login")
+    @Schema(description = "요청 경로", example = "/api/v1/auth/login")
     val path: String,
     
-    @Schema(description = "Error timestamp", example = "2024-01-01T10:30:00")
+    @Schema(description = "오류 발생 시간", example = "2024-01-01T10:30:00")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     val timestamp: LocalDateTime = LocalDateTime.now(),
     
-    @Schema(description = "Field validation errors")
+    @Schema(description = "필드 유효성 검사 오류")
     val fieldErrors: List<FieldError>? = null
 )
 
-@Schema(description = "Field validation error")
+@Schema(description = "필드 유효성 검사 오류")
 data class FieldError(
-    @Schema(description = "Field name", example = "email")
+    @Schema(description = "필드 이름", example = "email")
     val field: String,
     
-    @Schema(description = "Field error message", example = "Invalid email format")
+    @Schema(description = "필드 오류 메시지", example = "Invalid email format")
     val message: String
 )

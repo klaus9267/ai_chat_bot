@@ -3,15 +3,15 @@ package com.example.task.dto.auth
 import io.swagger.v3.oas.annotations.media.Schema
 
 data class AuthResponse(
-    @Schema(description = "JWT access token", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
+    @Schema(description = "JWT 액세스 토큰", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
     val token: String,
     
-    @Schema(description = "User email address", example = "user@example.com")
+    @Schema(description = "사용자 이메일 주소", example = "user@example.com")
     val email: String,
     
-    @Schema(description = "User display name", example = "홍길동")
+    @Schema(description = "사용자 디스플레이 이름", example = "홍길동")
     val name: String,
     
-    @Schema(description = "User role", example = "MEMBER")
+    @Schema(description = "사용자 역할", example = "MEMBER")
     val role: String
 )

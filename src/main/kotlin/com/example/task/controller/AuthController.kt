@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@Tag(name = "Authentication", description = "User authentication APIs")
+@Tag(name = "인증", description = "사용자 인증 API")
 class AuthController(
     private val userService: UserService,
     private val jwtUtil: JwtUtil
 ) {
 
     @PostMapping("/signup")
-    @Operation(summary = "User signup", description = "Register a new user account")
+    @Operation(summary = "회원가입", description = "새로운 사용자 계정을 등록합니다")
     fun signup(@Valid @RequestBody request: SignupRequest): AuthResponse {
         val user = userService.createUser(
             email = request.email,
@@ -44,7 +44,7 @@ class AuthController(
     }
 
     @PostMapping("/login")
-    @Operation(summary = "User login", description = "Authenticate user and return JWT token")
+    @Operation(summary = "로그인", description = "사용자 인증 후 JWT 토큰을 반환합니다")
     fun login(@Valid @RequestBody request: LoginRequest): AuthResponse {
         val user = userService.findByEmail(request.email)
             ?: throw CustomException(ErrorCode.INVALID_CREDENTIALS)

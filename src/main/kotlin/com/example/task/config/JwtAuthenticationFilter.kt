@@ -40,11 +40,13 @@ class JwtAuthenticationFilter(
                             null,
                             authorities
                         )
-                        authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
-
-                        request.setAttribute("userId", user.id)
-                        request.setAttribute("userRole", user.role.toString())
-
+                        
+                        // SecurityContext에 사용자 정보 저장 (SecurityUtil에서 사용)
+                        val userDetails = mapOf(
+                            "userId" to user.id,
+                            "userRole" to user.role.toString()
+                        )
+                        authToken.details = userDetails
                         SecurityContextHolder.getContext().authentication = authToken
                     }
                 }
