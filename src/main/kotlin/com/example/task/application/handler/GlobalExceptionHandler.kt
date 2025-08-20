@@ -1,4 +1,4 @@
-package com.example.task.config
+package com.example.task.application.handler
 
 import com.example.task.common.ErrorResponse
 import com.example.task.common.FieldError
