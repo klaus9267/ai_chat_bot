@@ -1,6 +1,8 @@
 package com.example.task.domain.thread.repository
 
 import com.example.task.domain.thread.entity.Thread
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
@@ -15,6 +17,12 @@ interface ThreadRepository : JpaRepository<Thread, Long> {
 
     @Query("SELECT t FROM Thread t WHERE t.user.id = :userId ORDER BY t.updatedAt DESC")
     fun findByUserIdOrderByUpdatedAtDesc(@Param("userId") userId: Long): List<Thread>
+    
+    /**
+     * 페이지네이션을 지원하는 사용자별 스레드 조회
+     */
+    @Query("SELECT t FROM Thread t WHERE t.user.id = :userId")
+    fun findByUserIdOrderByUpdatedAtDesc(@Param("userId") userId: Long, pageable: Pageable): Page<Thread>
 
     @Query("SELECT t FROM Thread t WHERE t.user.id = :userId AND t.updatedAt >= :cutoffTime ORDER BY t.updatedAt DESC")
     fun findActiveThreadByUserId(

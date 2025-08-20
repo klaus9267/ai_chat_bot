@@ -7,6 +7,8 @@ import com.example.task.domain.thread.entity.Thread
 import com.example.task.domain.thread.repository.ThreadRepository
 import com.example.task.domain.user.entity.User
 import com.example.task.domain.user.service.UserService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -149,4 +151,38 @@ class ThreadService(
         val userId = SecurityUtil.Companion.getCurrentUserId()
         return getOrCreateActiveThread(userId)
     }
+    
+    /**
+     * 대화 목록 조회 (페이지네이션 + 권한 체크)
+     */
+    fun getUserThreads(targetUserId: Long?, pageable: Pageable): Page<Thread> {
+        val currentUserInfo = SecurityUtil.Companion.getCurrentUserInfo()
+        
+        return when {
+            // userId가 없으면 현재 사용자의 스레드 조회
+            targetUserId == null -> {
+                threadRepository.findByUserIdOrderByUpdatedAtDesc(currentUserInfo.userId, pageable)
+            }
+            
+            // 자신의 스레드를 조회하는 경우
+            targetUserId == currentUserInfo.userId -> {
+                threadRepository.findByUserIdOrderByUpdatedAtDesc(currentUserInfo.userId, pageable)
+            }
+            
+            // 다른 사용자의 스레드를 조회하는 경우
+            else -> {
+                // 관리자만 다른 사용자의 스레드 조회 가능
+                if (currentUserInfo.role != "ADMIN") {
+                    throw CustomException(ErrorCode.UNAUTHORIZED_ACCESS, "다른 사용자의 대화를 조회할 권한이 없습니다")
+                }
+                
+                // 대상 사용자 존재 확인
+                userService.findById(targetUserId)
+                    ?: throw CustomException(ErrorCode.USER_NOT_FOUND, "대상 사용자를 찾을 수 없습니다: $targetUserId")
+                
+                threadRepository.findByUserIdOrderByUpdatedAtDesc(targetUserId, pageable)
+            }
+        }
+    }
+    
 }
